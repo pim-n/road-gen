@@ -33,7 +33,7 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
     def generate(
             self,
             segments: list[str],
-            alpha: float = 1.0
+            alpha: float = 100
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Generate a curvature profile from a list of segments.
 
