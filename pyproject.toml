@@ -27,3 +27,6 @@ road-gen = "road_gen.main:main"
 [project.urls]
 Homepage = "https://github.com/pim-n/road-gen"
 Issues = "https://github.com/pim-n/road-gen/issues"
+
+[project.optional-dependencies]
+dev = ["pytest"]
