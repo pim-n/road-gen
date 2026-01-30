@@ -1,6 +1,6 @@
 [project]
 name = "road_gen"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
   { name="Pim Nelissen", email="pi0274ne-s@student.lu.se" },
 ]
