@@ -54,10 +54,20 @@ road-gen random -l 1000 -s 10 -v 10 --save
 
 which will produce 3 files starting with the unique seed number used to generate the road.
 
+## Example - segmented road
+
+A minimal segmented road needs, besides length $L$, step size $\Delta s$ and velocity $v$, a list of segments.
+
+```
+road-gen segments --segments straight turn_left straight turn_right --length 1000 --ds 10 --velocity 10
+```
+
+The parameter $\alpha$ represents the concentration factor for the [Dirichlet distribution](https://numpy.org/doc/2.0/reference/random/generated/numpy.random.dirichlet.html).
+
 ## Reproducability
 
 You can reproduce results by adding a seed with the `--seed` flag.
 
 ## Other
 
-For more info, just see `road-gen --help` or `road-gen random --help`.
+For more info, see `road-gen --help` or `road-gen random --help`.
