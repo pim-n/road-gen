@@ -33,27 +33,25 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
     def generate(
             self,
             segments: list[str],
-            alpha: float = 1.0
+            alpha: float = 100
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Generate a curvature profile from a list of segments.
 
         Args:
             segments (list[str]): List of segments.
-            length (int): Total length of the path in meters.
-            velocity (float): Velocity of the car in km/h.
-            ds (float, optional): Step size. Defaults to 1.0.
             alpha (float, optional): Dirichlet concentration parameter. A higher value leads to more uniform apportionment of the length amongst the segments, while a lower value allows more random apportionment. Defaults to 1.0.
-
+        
         Raises:
-            ValueError: _description_
-            ValueError: _description_
-
+            ValueError: "No valid radius for this turn segment" means a turn is too tight given its segment length and the velocity. To fix this, you can try to reduce the amount of segments or increase length. Increasing alpha (Dirichlet concentration parameter) can also help because this reduces the odds of very small lengths being assigned to turn segments. 
+        
         Returns:
-            np.ndarray: _description_
+            Tuple[np.ndarray, np.ndarray]: x and y coordinates of the waypoints describing the random road.
         """
         if not all(segment in prefabs.PREFABS.keys() for segment in segments):
             raise ValueError(f"Invalid segment type provided. Available choices: {prefabs.SEGMENTS.keys()}")
         
+        self.segments = segments
+        self.alpha = alpha
         num_points = int(self.length / self.ds)
 
         # divide num_points into len(segments) randomly sized parts.
@@ -84,7 +82,7 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
                 if R_min > R_max_angle:
                     raise ValueError("No valid radius for this turn segment")
 
-                rand_radius = np.random.uniform(R_min, R_max_angle)
+                rand_radius = self._rng.uniform(R_min, R_max_angle)
 
                 if seg_name.startswith("u_turn"):
                     curvature_s = seg_function(rand_radius)
