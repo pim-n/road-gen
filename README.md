@@ -71,3 +71,5 @@ You can reproduce results by adding a seed with the `--seed` flag.
 ## Other
 
 For more info, see `road-gen --help` or `road-gen random --help`.
+
+There are some Jupyter notebooks explaining [roads as planar curves](docs/planar_curve.ipynb), as well as the actual implementation of [random segmented roads](docs/prefab_roads.ipynb) and [random roads from noise](docs/random_roads.ipynb).
