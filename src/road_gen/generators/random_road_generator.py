@@ -55,10 +55,10 @@ class RandomRoadGenerator(BaseRoadGenerator):
         # Randomly add multiple straight sections
         i = 0
         while i < num_points:
-            if np.random.rand() < straight_section_prob:
+            if self._rng.random() < straight_section_prob:
                 # Random straight segment length
                 max_len = int(num_points * straight_section_max_rel_size)
-                seg_len = np.random.randint(1, max_len + 1)
+                seg_len = self._rng.integers(1, max_len + 1)
                 curvature[i:i+seg_len] = 0  # set curvature to zero for straight
                 i += seg_len  # skip over straight segment
             else:
