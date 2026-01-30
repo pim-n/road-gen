@@ -40,13 +40,12 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
         Args:
             segments (list[str]): List of segments.
             alpha (float, optional): Dirichlet concentration parameter. A higher value leads to more uniform apportionment of the length amongst the segments, while a lower value allows more random apportionment. Defaults to 1.0.
-
+        
         Raises:
-            ValueError: _description_
-            ValueError: _description_
-
+            ValueError: "No valid radius for this turn segment" means a turn is too tight given its segment length and the velocity. To fix this, you can try to reduce the amount of segments or increase length. Increasing alpha (Dirichlet concentration parameter) can also help because this reduces the odds of very small lengths being assigned to turn segments. 
+        
         Returns:
-            np.ndarray: _description_
+            Tuple[np.ndarray, np.ndarray]: x and y coordinates of the waypoints describing the random road.
         """
         if not all(segment in prefabs.PREFABS.keys() for segment in segments):
             raise ValueError(f"Invalid segment type provided. Available choices: {prefabs.SEGMENTS.keys()}")
