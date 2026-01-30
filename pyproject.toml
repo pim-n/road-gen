@@ -1,0 +1,29 @@
+[project]
+name = "road_gen"
+version = "0.1.0"
+authors = [
+  { name="Pim Nelissen", email="pi0274ne-s@student.lu.se" },
+]
+description = "RoadGen"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.9.2",
+    "numpy>=2"
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[build-system]
+requires = ["setuptools>=64.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+road-gen = "road_gen.main:main"
+
+[project.urls]
+Homepage = "https://github.com/pim-n/road-gen"
+Issues = "https://github.com/pim-n/road-gen/issues"
