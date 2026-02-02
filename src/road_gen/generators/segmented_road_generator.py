@@ -33,14 +33,17 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
     def generate(
             self,
             segments: list[str],
-            alpha: float = 100
+            alpha: float = 100,
+            min_turn_angle: float = 15.,
+            max_turn_angle: float = 90.
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Generate a curvature profile from a list of segments.
 
         Args:
             segments (list[str]): List of segments.
             alpha (float, optional): Dirichlet concentration parameter. A higher value leads to more uniform apportionment of the length amongst the segments, while a lower value allows more random apportionment. Defaults to 1.0.
-        
+            min_turn_angle (float, optional): Minimum turn angle in degrees for random sampling of turn radius. Does nothing if `angle_list` is provided or no `turn_*` segement is specified in the `segments` list.
+            min_turn_angle (float, optional): Maximum turn angle in degrees for random sampling of turn radius. Does nothing if `angle_list` is provided or no `turn_*` segement is specified in the `segments` list.
         Raises:
             ValueError: "No valid radius for this turn segment" means a turn is too tight given its segment length and the velocity. To fix this, you can try to reduce the amount of segments or increase length. Increasing alpha (Dirichlet concentration parameter) can also help because this reduces the odds of very small lengths being assigned to turn segments. 
         
@@ -64,7 +67,6 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
         if sum(parts) != num_points:
             parts[0] += num_points - sum(parts)
 
-
         curvature = np.zeros(num_points)
         current_index = 0
 
@@ -74,8 +76,8 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
             if seg_name == 'straight':
                 curvature_s = seg_function(seg_length)
             else:
-                R_min_angle = seg_length / (np.pi / 2)
-                R_max_angle = seg_length / (np.pi / 6)
+                R_min_angle = seg_length / np.deg2rad(max_turn_angle)
+                R_max_angle = seg_length / np.deg2rad(min_turn_angle)
 
                 # physics limit
                 R_min = max(self.min_radius, R_min_angle)
