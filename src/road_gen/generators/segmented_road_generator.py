@@ -47,8 +47,9 @@ class SegmentedRoadGenerator(BaseRoadGenerator):
         Returns:
             Tuple[np.ndarray, np.ndarray]: x and y coordinates of the waypoints describing the random road.
         """
-        if not all(segment in prefabs.PREFABS.keys() for segment in segments):
-            raise ValueError(f"Invalid segment type provided. Available choices: {prefabs.SEGMENTS.keys()}")
+        existing_prefabs = prefabs.PREFABS.keys()
+        if not all(segment in existing_prefabs for segment in segments):
+            raise ValueError(f"Invalid segment type provided. Available choices: {existing_prefabs}")
         
         self.segments = segments
         self.alpha = alpha
