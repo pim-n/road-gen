@@ -1,3 +1,5 @@
+Archived due to codebase being integrated in [PG-RAD](https://github.com/pim-n/pg-rad).
+
 # RoadGen
 
 Generate road segments in a 2D Cartesian plane.
